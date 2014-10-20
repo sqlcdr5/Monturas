@@ -1,0 +1,10 @@
+## Interface: 60000
+## Title: Monturas
+## Author: Laertes
+## DefaultState: Enabled
+## Notes: Addon que genera unos comandos para usar monturas y acompanantes aleatorios
+## Version: 1.00
+## SavedVariables: _MonturasOptions
+## SavedVariablesPerCharacter: _MonturasOptionsCharacter
+
+Monturas.XML
