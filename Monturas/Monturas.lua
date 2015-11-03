@@ -1,4 +1,4 @@
--- Aqui puedo definir las variables globales. TambiÈn se pueden poner en otro .LUA
+-- Aqui puedo definir las variables globales. Tambi√©n se pueden poner en otro .LUA
 -- (como se hace para las localizaciones por idioma) siempre y cuando se incluya la referencia en el TOC o en el XML.
 
 _MonturasOptions= {}
@@ -10,13 +10,26 @@ local vt={}
 local vn=0
 local puid=0
 
--- FunciÛn de inicio llamada desde el evento OnLoad definido en el XML.
+
+-- Localizaci√≥n (multilenguaje). Como es tan poco he preferido meterlo en este fichero
+local L = {};
+L["CARGADO"] = "Macros and rest of 'Monturas' AddOn LOADED, version 1.02. Type /monturas for help.";
+L["HELP01"] = " /monturas terrestre: ground mount \n /monturas voladora: flyable mount \n /monturas azar: flyable mount, gorund mount if not flyable area \n /monturas criatura: random pet";
+L["HELP02"] = " /monturas mterrestre, /monturas mvoladora, /monturas azar, /monturas mcriatura: same commands, but call previous summoned pet or mount";
+L["HELP03"] = " /monturas macros: build macros for this commands that can be used in action bars. These macros have been created at login";
+if GetLocale() == "esES" then
+    L["CARGADO"] = "Cargado las macros y el AddOn de 'Monturas' version 1.02. Teclee /monturas para acceder a la ayuda.";
+	L["HELP01"] = " /monturas terrestre: montura terrestre \n /monturas voladora: montura voladora \n /monturas azar: montura voladora o si no se puede terrestre \n /monturas criatura: mascota al azar";
+	L["HELP02"] = " /monturas mterrestre, /monturas mvoladora, /monturas azar, /monturas mcriatura: como las anteriores pero llama a la montura o mascota que usamos justo anteriormente";
+    L["HELP03"] = " /monturas macros: crea macros para estas ordenes que pueden usarse en las barras de acciones. Estas macros tambi√©n se crean autom√°ticamente al entrar";
+end
 
 
+-- Funci√≥n de inicio llamada desde el evento OnLoad definido en el XML.
 function Monturas_OnLoad()
 	--Registramos nuestro propio comando /monturas
 	SLASH_MONTURAS1 = "/monturas";
-	SlashCmdList["MONTURAS"] = Monturas_Command; --se pone como valor la funciÛn que ser· llamada al escribir o lanzar una macro con /monturas	
+	SlashCmdList["MONTURAS"] = Monturas_Command; --se pone como valor la funci√≥n que ser√° llamada al escribir o lanzar una macro con /monturas	
 	
 	_MonturasOptionsCharacter = {
 		tuid = 0,
@@ -27,24 +40,20 @@ function Monturas_OnLoad()
 	-- Opcionalmente se pueden incluir alias al mismo comando
 	-- SLASH_MONTURAS1 = "/monturas";
 	-- SLASH_MONTURAS2 = "/mont";
-	-- SlashCmdList["MONTURAS"] = Monturas_Command; --se pone como valor la funciÛn que ser· llamada al escribir o lanzar una macro con /monturas
+	-- SlashCmdList["MONTURAS"] = Monturas_Command; --se pone como valor la funci√≥n que ser√° llamada al escribir o lanzar una macro con /monturas
 
-	-- NÛtese, que el nombre puesto en SlashCmdList["NOMBRE"] debe ser el mismo que en SLASH_NOMBRE1, SLASH_NOMBRE2...
+	-- N√≥tese, que el nombre puesto en SlashCmdList["NOMBRE"] debe ser el mismo que en SLASH_NOMBRE1, SLASH_NOMBRE2...
 end
 
 
--- FunciÛn invocada a travÈs de nuestro comando /monturas. msg contendr· todo lo que vaya detr·s del comando
--- (ej. para "/chispas help", contendr· "help"). De este modo podemos hacer comandos con par·metros.
-
+-- Funci√≥n invocada a trav√©s de nuestro comando /monturas. msg contendr√° todo lo que vaya detr√°s del comando
+-- (ej. para "/chispas help", contendr√° "help"). De este modo podemos hacer comandos con par√°metros.
 function Monturas_Command(msg)
 	if msg == "macros" then
 		Montura_Macro_Command()
 	end
-	if msg == "" then
-		Montura_Azar_Command("otra")
-	end
-	if msg == nil then
-		Montura_Azar_Command("otra")
+	if msg == "" or msg == "help" or msg == nil then
+		Montura_Help_Command()
 	end
 	if msg == "terrestre" then
 		Montura_Terrestre_Command("otra")
@@ -73,23 +82,30 @@ function Monturas_Command(msg)
 end
 
 
+function Montura_Help_Command()
+	Monturas_Mensaje(L["HELP01"])
+	Monturas_Mensaje(L["HELP02"])
+	Monturas_Mensaje(L["HELP03"])
+end
+
+
 function Montura_Macro_Command()
 	if GetMacroIndexByName("mterrestre") ~= 0 then 
-		EditMacro("mterrestre", "mterrestre", "Ability_Mount_Ridinghorse", "/monturas terrestre", 1, nil)
+		EditMacro("mterrestre", "mterrestre", "Ability_Mount_Ridinghorse", "/cancelform \n/monturas terrestre", 1, nil)
 	else
-		CreateMacro("mterrestre", "Ability_Mount_Ridinghorse", "/monturas terrestre", 1, nil)
+		CreateMacro("mterrestre", "Ability_Mount_Ridinghorse", "/cancelform \n/monturas terrestre", 1, nil)
 	end
 
 	if GetMacroIndexByName("mvoladora") ~= 0 then
-		EditMacro("mvoladora", "mvoladora", "Ability_Mount_Drake_Bronze", "/monturas voladora", 1, nil)
+		EditMacro("mvoladora", "mvoladora", "Ability_Mount_Drake_Bronze", "/cancelform \n/monturas voladora", 1, nil)
 	else
-		CreateMacro("mvoladora", "Ability_Mount_Drake_Bronze", "/monturas voladora", 1, nil)
+		CreateMacro("mvoladora", "Ability_Mount_Drake_Bronze", "/cancelform \n/monturas voladora", 1, nil)
 	end
 
 	if GetMacroIndexByName("mazar") ~= 0 then
-		EditMacro("mazar", "mazar", "Ability_Mount_Goldengryphon", "/monturas azar", 1, nil)
+		EditMacro("mazar", "mazar", "Ability_Mount_Goldengryphon", "/cancelform \n/monturas azar", 1, nil)
 	else
-		CreateMacro("mazar", "Ability_Mount_Goldengryphon", "/monturas azar", 1, nil)
+		CreateMacro("mazar", "Ability_Mount_Goldengryphon", "/cancelform \n/monturas azar", 1, nil)
 	end
 
 	if GetMacroIndexByName("crazar") ~= 0 then
@@ -97,19 +113,18 @@ function Montura_Macro_Command()
 	else
 		CreateMacro("crazar", "Inv_Pet_Pettrap01", "/monturas criatura", 1, nil)
 	end
-	
-	message("Creadas/Modificadas las macros del addon MONTURAS")
+
+	-- message("Creadas/Modificadas las macros del addon MONTURAS")
 end
 
 
 function Montura_Terrestre_Command(msg)
-	-- Si esta montado desmonta
-	
 	if GetMouseButtonClicked() ~= "LeftButton" then
 		msg = "misma"
 	end
 	
 	if IsMounted() then
+		-- Si esta montado desmonta
 		Dismount()
 	else
 		local mifaccion = select(1,UnitFactionGroup("player"))
@@ -125,13 +140,14 @@ function Montura_Terrestre_Command(msg)
 			tn=0
 			for i=1,C_MountJournal.GetNumMounts() do
 				local q = select(5,C_MountJournal.GetMountInfoExtra(i))
+				local usable = select(5,C_MountJournal.GetMountInfo(i))
 				local aprendido = select(11,C_MountJournal.GetMountInfo(i))
 				local faccion = select(9,C_MountJournal.GetMountInfo(i))
 				local faccionn = faccion
 				if faccion == nil then
 					faccionn = mifaccionn
 				end
-				if q == 230 and aprendido == true and mifaccionn == faccionn then -- 230 es terrestre
+				if q == 230 and usable == true and aprendido == true and mifaccionn == faccionn then -- 230 es terrestre
 					tn = tn + 1
 					tt[tn] = i
 				end
@@ -139,20 +155,19 @@ function Montura_Terrestre_Command(msg)
 			_MonturasOptionsCharacter["tuid"] = tt[random(tn)]
 		end
 		-- Para los druidas cancela cualquier forma que tuviese
-		CancelShapeshiftForm()
+		CancelShapeshiftForm() -- Aunque no funciona porque es una funci√≥n protegida
 		C_MountJournal.Summon(_MonturasOptionsCharacter["tuid"])
 	end
 end
 
 
 function Montura_Voladora_Command(msg)
-	-- Si esta montado desmonta
-	
 	if GetMouseButtonClicked() ~= "LeftButton" then
 		msg = "misma"
 	end
 
 	if IsMounted() then
+		-- Si esta montado desmonta
 		Dismount()
 	else
 		local mifaccion = select(1,UnitFactionGroup("player"))
@@ -168,13 +183,14 @@ function Montura_Voladora_Command(msg)
 			vn=0
 			for i=1,C_MountJournal.GetNumMounts() do
 				local q = select(5,C_MountJournal.GetMountInfoExtra(i))
+				local usable = select(5,C_MountJournal.GetMountInfo(i))
 				local aprendido = select(11,C_MountJournal.GetMountInfo(i))
 				local faccion = select(9,C_MountJournal.GetMountInfo(i))
 				local faccionn = faccion
 				if faccion == nil then
 					faccionn = mifaccionn
 				end
-				if q == 248 and aprendido == true and mifaccionn == faccionn then -- voladora
+				if q == 248 and usable == true and aprendido == true and mifaccionn == faccionn then -- voladora
 					vn = vn + 1
 					vt[vn] = i
 				end
@@ -182,7 +198,7 @@ function Montura_Voladora_Command(msg)
 			_MonturasOptionsCharacter["vuid"] = vt[random(vn)]
 		end
 		-- Para los druidas cancela cualquier forma que tuviese
-		CancelShapeshiftForm()
+		CancelShapeshiftForm() -- Aunque no funciona porque es una funci√≥n protegida
 		C_MountJournal.Summon(_MonturasOptionsCharacter["vuid"])
 	end
 end
@@ -191,7 +207,7 @@ end
 function Montura_Azar_Command(msg)
 	-- Si se puede volar montura voladora
 	if IsFlyableArea() then
-		 Montura_Voladora_Command(msg)
+		Montura_Voladora_Command(msg)
 	-- Si no terrestre
 	else
 		Montura_Terrestre_Command(msg)
@@ -220,5 +236,22 @@ function Criatura_Azar_Command(msg)
 	-- Si tiene un acompanante fuera lo quita
 	else
 	    q.SummonPetByGUID(actual)
+	end
+end
+
+
+function Monturas_Mensaje(texto)
+	local tag = "MONTURAS"
+	local frame = DEFAULT_CHAT_FRAME
+	frame:AddMessage(("|cffff7d0a<|r|cffffd200%s|r|cffff7d0a>|r %s"):format(tostring(tag), tostring(texto)), 0.41, 0.8, 0.94)	
+end
+
+
+function Monturas_OnEvent(self, event, ...) 
+	if event == "PLAYER_ALIVE" then
+		-- Despu√©s de este evento ya se ha entrado con el usuario. Entonces se ejecuta el comando de creaci√≥n de macros.
+		Montura_Macro_Command()
+		self:UnregisterEvent("PLAYER_ALIVE")
+		Monturas_Mensaje(L["CARGADO"])
 	end
 end

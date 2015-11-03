@@ -3,8 +3,10 @@
 	<Frame name="MonturasMainFrame" parent="UIParent" hidden="true">
 		<Scripts>
 			<OnLoad>
+			    self:RegisterEvent("PLAYER_ALIVE");
 				Monturas_OnLoad();
 			</OnLoad>
+			<OnEvent function="Monturas_OnEvent"/>
 		</Scripts>
 	</Frame>
 </Ui>
