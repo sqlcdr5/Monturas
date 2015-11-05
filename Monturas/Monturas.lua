@@ -90,22 +90,30 @@ end
 
 
 function Montura_Macro_Command()
+
+    classDisplayName, class, classID = UnitClass("player");
+	
+	local cancelar = "";
+	if classID == 11 then
+		cancelar = "/cancelform \n";
+	end
+
 	if GetMacroIndexByName("mterrestre") ~= 0 then 
-		EditMacro("mterrestre", "mterrestre", "Ability_Mount_Ridinghorse", "/cancelform \n/monturas terrestre", 1, nil)
+		EditMacro("mterrestre", "mterrestre", "Ability_Mount_Ridinghorse", cancelar .. "/monturas terrestre", 1, nil)
 	else
-		CreateMacro("mterrestre", "Ability_Mount_Ridinghorse", "/cancelform \n/monturas terrestre", 1, nil)
+		CreateMacro("mterrestre", "Ability_Mount_Ridinghorse", cancelar .. "/monturas terrestre", 1, nil)
 	end
 
 	if GetMacroIndexByName("mvoladora") ~= 0 then
-		EditMacro("mvoladora", "mvoladora", "Ability_Mount_Drake_Bronze", "/cancelform \n/monturas voladora", 1, nil)
+		EditMacro("mvoladora", "mvoladora", "Ability_Mount_Drake_Bronze", cancelar .. "/monturas voladora", 1, nil)
 	else
-		CreateMacro("mvoladora", "Ability_Mount_Drake_Bronze", "/cancelform \n/monturas voladora", 1, nil)
+		CreateMacro("mvoladora", "Ability_Mount_Drake_Bronze", cancelar .. "/monturas voladora", 1, nil)
 	end
 
 	if GetMacroIndexByName("mazar") ~= 0 then
-		EditMacro("mazar", "mazar", "Ability_Mount_Goldengryphon", "/cancelform \n/monturas azar", 1, nil)
+		EditMacro("mazar", "mazar", "Ability_Mount_Goldengryphon", cancelar .. "/monturas azar", 1, nil)
 	else
-		CreateMacro("mazar", "Ability_Mount_Goldengryphon", "/cancelform \n/monturas azar", 1, nil)
+		CreateMacro("mazar", "Ability_Mount_Goldengryphon", cancelar .. "/monturas azar", 1, nil)
 	end
 
 	if GetMacroIndexByName("crazar") ~= 0 then
