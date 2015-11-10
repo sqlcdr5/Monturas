@@ -160,11 +160,15 @@ function Montura_Terrestre_Command(msg)
 					tt[tn] = i
 				end
 			end
-			_MonturasOptionsCharacter["tuid"] = tt[random(tn)]
+			if tn > 0 then
+				_MonturasOptionsCharacter["tuid"] = tt[random(tn)]
+			end
 		end
-		-- Para los druidas cancela cualquier forma que tuviese
-		CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
-		C_MountJournal.Summon(_MonturasOptionsCharacter["tuid"])
+		if tn > 0 then
+			-- Para los druidas cancela cualquier forma que tuviese
+			CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
+			C_MountJournal.Summon(_MonturasOptionsCharacter["tuid"])
+		end
 	end
 end
 
@@ -203,11 +207,15 @@ function Montura_Voladora_Command(msg)
 					vt[vn] = i
 				end
 			end
-			_MonturasOptionsCharacter["vuid"] = vt[random(vn)]
+			if vn > 0 then
+				_MonturasOptionsCharacter["vuid"] = vt[random(vn)]
+			end
 		end
-		-- Para los druidas cancela cualquier forma que tuviese
-		CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
-		C_MountJournal.Summon(_MonturasOptionsCharacter["vuid"])
+		if vn > 0 then
+			-- Para los druidas cancela cualquier forma que tuviese
+			CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
+			C_MountJournal.Summon(_MonturasOptionsCharacter["vuid"])
+		end
 	end
 end
 
@@ -236,11 +244,15 @@ function Criatura_Azar_Command(msg)
 		-- Si no se le ha dicho repe para usar la anterior, o no hubiera ninguna anterior definida
 		if msg ~= "misma" or _MonturasOptionsCharacter["puid"] == 0 then
 			v={q.GetNumPets()}
-			r=random(v[2])
-			p={q.GetPetInfoByIndex(r)}
-			_MonturasOptionsCharacter["puid"] = p[1]
+			if v[2] > 0 then
+				r=random(v[2])
+				p={q.GetPetInfoByIndex(r)}
+				_MonturasOptionsCharacter["puid"] = p[1]
+			end
 		end
-		q.SummonPetByGUID(_MonturasOptionsCharacter["puid"])
+		if v[2] > 0 then
+			q.SummonPetByGUID(_MonturasOptionsCharacter["puid"])
+		end
 	-- Si tiene un acompanante fuera lo quita
 	else
 	    q.SummonPetByGUID(actual)
