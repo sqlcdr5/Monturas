@@ -147,10 +147,10 @@ function Montura_Terrestre_Command(msg)
 			tt={}
 			tn=0
 			for i=1,C_MountJournal.GetNumMounts() do
-				local q = select(5,C_MountJournal.GetMountInfoExtra(i))
-				local usable = select(5,C_MountJournal.GetMountInfo(i))
-				local aprendido = select(11,C_MountJournal.GetMountInfo(i))
-				local faccion = select(9,C_MountJournal.GetMountInfo(i))
+				local q = select(5,C_MountJournal.GetMountInfoExtraByID(i))
+				local usable = select(5,C_MountJournal.GetMountInfoByID(i))
+				local aprendido = select(11,C_MountJournal.GetMountInfoByID(i))
+				local faccion = select(9,C_MountJournal.GetMountInfoByID(i))
 				local faccionn = faccion
 				if faccion == nil then
 					faccionn = mifaccionn
@@ -167,7 +167,7 @@ function Montura_Terrestre_Command(msg)
 		if tn > 0 then
 			-- Para los druidas cancela cualquier forma que tuviese
 			CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
-			C_MountJournal.Summon(_MonturasOptionsCharacter["tuid"])
+			C_MountJournal.SummonByID(_MonturasOptionsCharacter["tuid"])
 		end
 	end
 end
@@ -194,10 +194,10 @@ function Montura_Voladora_Command(msg)
 			vt={}
 			vn=0
 			for i=1,C_MountJournal.GetNumMounts() do
-				local q = select(5,C_MountJournal.GetMountInfoExtra(i))
-				local usable = select(5,C_MountJournal.GetMountInfo(i))
-				local aprendido = select(11,C_MountJournal.GetMountInfo(i))
-				local faccion = select(9,C_MountJournal.GetMountInfo(i))
+				local q = select(5,C_MountJournal.GetMountInfoExtraByID(i))
+				local usable = select(5,C_MountJournal.GetMountInfoByID(i))
+				local aprendido = select(11,C_MountJournal.GetMountInfoByID(i))
+				local faccion = select(9,C_MountJournal.GetMountInfoByID(i))
 				local faccionn = faccion
 				if faccion == nil then
 					faccionn = mifaccionn
@@ -214,7 +214,7 @@ function Montura_Voladora_Command(msg)
 		if vn > 0 then
 			-- Para los druidas cancela cualquier forma que tuviese
 			CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
-			C_MountJournal.Summon(_MonturasOptionsCharacter["vuid"])
+			C_MountJournal.SummonByID(_MonturasOptionsCharacter["vuid"])
 		end
 	end
 end
