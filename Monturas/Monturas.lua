@@ -13,12 +13,12 @@ local puid=0
 
 -- Localización (multilenguaje). Como es tan poco he preferido meterlo en este fichero
 local L = {};
-L["CARGADO"] = "Macros and rest of 'Monturas' AddOn LOADED, version 1.02. Type /monturas for help.";
+L["CARGADO"] = "Macros and rest of 'Monturas' AddOn LOADED, version 7.03. Type /monturas for help.";
 L["HELP01"] = " /monturas terrestre: ground mount \n /monturas voladora: flyable mount \n /monturas azar: flyable mount, gorund mount if not flyable area \n /monturas criatura: random pet";
 L["HELP02"] = " /monturas mterrestre, /monturas mvoladora, /monturas azar, /monturas mcriatura: same commands, but call previous summoned pet or mount";
 L["HELP03"] = " /monturas macros: build macros for this commands that can be used in action bars. These macros have been created at login";
 if GetLocale() == "esES" then
-    L["CARGADO"] = "Cargado las macros y el AddOn de 'Monturas' version 1.02. Teclee /monturas para acceder a la ayuda.";
+    L["CARGADO"] = "Cargado las macros y el AddOn de 'Monturas' version 7.03. Teclee /monturas para acceder a la ayuda.";
 	L["HELP01"] = " /monturas terrestre: montura terrestre \n /monturas voladora: montura voladora \n /monturas azar: montura voladora o si no se puede terrestre \n /monturas criatura: mascota al azar";
 	L["HELP02"] = " /monturas mterrestre, /monturas mvoladora, /monturas azar, /monturas mcriatura: como las anteriores pero llama a la montura o mascota que usamos justo anteriormente";
     L["HELP03"] = " /monturas macros: crea macros para estas ordenes que pueden usarse en las barras de acciones. Estas macros también se crean automáticamente al entrar";
@@ -36,7 +36,7 @@ function Monturas_OnLoad()
 		vuid = 0,
 		puid = 0
 	}
-
+	
 	-- Opcionalmente se pueden incluir alias al mismo comando
 	-- SLASH_MONTURAS1 = "/monturas";
 	-- SLASH_MONTURAS2 = "/mont";
@@ -147,10 +147,10 @@ function Montura_Terrestre_Command(msg)
 			tt={}
 			tn=0
 			for i=1,C_MountJournal.GetNumMounts() do
-				local q = select(5,C_MountJournal.GetMountInfoExtra(i))
-				local usable = select(5,C_MountJournal.GetMountInfo(i))
-				local aprendido = select(11,C_MountJournal.GetMountInfo(i))
-				local faccion = select(9,C_MountJournal.GetMountInfo(i))
+				local q = select(5,C_MountJournal.GetMountInfoExtraByID(i))
+				local usable = select(5,C_MountJournal.GetMountInfoByID(i))
+				local aprendido = select(11,C_MountJournal.GetMountInfoByID(i))
+				local faccion = select(9,C_MountJournal.GetMountInfoByID(i))
 				local faccionn = faccion
 				if faccion == nil then
 					faccionn = mifaccionn
@@ -167,7 +167,7 @@ function Montura_Terrestre_Command(msg)
 		if tn > 0 then
 			-- Para los druidas cancela cualquier forma que tuviese
 			CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
-			C_MountJournal.Summon(_MonturasOptionsCharacter["tuid"])
+			C_MountJournal.SummonByID(_MonturasOptionsCharacter["tuid"])
 		end
 	end
 end
@@ -194,10 +194,10 @@ function Montura_Voladora_Command(msg)
 			vt={}
 			vn=0
 			for i=1,C_MountJournal.GetNumMounts() do
-				local q = select(5,C_MountJournal.GetMountInfoExtra(i))
-				local usable = select(5,C_MountJournal.GetMountInfo(i))
-				local aprendido = select(11,C_MountJournal.GetMountInfo(i))
-				local faccion = select(9,C_MountJournal.GetMountInfo(i))
+				local q = select(5,C_MountJournal.GetMountInfoExtraByID(i))
+				local usable = select(5,C_MountJournal.GetMountInfoByID(i))
+				local aprendido = select(11,C_MountJournal.GetMountInfoByID(i))
+				local faccion = select(9,C_MountJournal.GetMountInfoByID(i))
 				local faccionn = faccion
 				if faccion == nil then
 					faccionn = mifaccionn
@@ -214,7 +214,7 @@ function Montura_Voladora_Command(msg)
 		if vn > 0 then
 			-- Para los druidas cancela cualquier forma que tuviese
 			CancelShapeshiftForm() -- Aunque no funciona porque es una función protegida
-			C_MountJournal.Summon(_MonturasOptionsCharacter["vuid"])
+			C_MountJournal.SummonByID(_MonturasOptionsCharacter["vuid"])
 		end
 	end
 end
@@ -263,7 +263,7 @@ end
 function Monturas_Mensaje(texto)
 	local tag = "MONTURAS"
 	local frame = DEFAULT_CHAT_FRAME
-	frame:AddMessage(("|cffff7d0a<|r|cffffd200%s|r|cffff7d0a>|r %s"):format(tostring(tag), tostring(texto)), 0.41, 0.8, 0.94)	
+	frame:AddMessage(("|cffff7d0a<|r|cffffd200%s|r|cffff7d0a>|r %s"):format(tostring(tag), tostring(texto)), 0.41, 0.8, 0.94)
 end
 
 
@@ -271,7 +271,7 @@ function Monturas_OnEvent(self, event, ...)
 	if event == "PLAYER_ALIVE" then
 		-- Después de este evento ya se ha entrado con el usuario. Entonces se ejecuta el comando de creación de macros.
 		Montura_Macro_Command()
-		self:UnregisterEvent("PLAYER_ALIVE")
 		Monturas_Mensaje(L["CARGADO"])
+		self:UnregisterEvent("PLAYER_ALIVE")
 	end
 end
