@@ -3,7 +3,7 @@
 ## Author: Laertes
 ## DefaultState: Enabled
 ## Notes: Addon que genera unos comandos para usar monturas y acompanantes aleatorios
-## Version: 7.03
+## Version: 7.1
 ## SavedVariables: _MonturasOptions
 ## SavedVariablesPerCharacter: _MonturasOptionsCharacter
 
