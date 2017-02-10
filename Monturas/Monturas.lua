@@ -95,7 +95,7 @@ function Montura_Macro_Command()
 	
 	local cancelar = "";
 	if classID == 11 then
-		cancelar = "/cancelform \n";
+		cancelar = "/cancelform [stance:1/2/3] \n";
 	end
 
 	if GetMacroIndexByName("mterrestre") ~= 0 then 
