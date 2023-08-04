@@ -1,8 +1,8 @@
 Se trata de un addon para el juego World of Warcraft. Proporciona unas macros y unas ordenes para usar
-monturas o invocar mascotas al azar. La montura o mascota que salga lo har· de forma aleatoria, eligiendo
+monturas o invocar mascotas al azar. La montura o mascota que salga lo har√° de forma aleatoria, eligiendo
 de entre todas las que tengamos aprendidas.
 
 Una vez se entra en el juego con el Addon cargado, ya tendremos unas macros que podemos colocar en las
-barras de acciÛn como botones. Si pulsamos en las macros con el botÛn derecho del ratÛn repetiremos la
-montura o mascota que hubiera salido justo anteriormente a travÈs de estos botones. Si pulsamos en ellos
+barras de acci√≥n como botones. Si pulsamos en las macros con el bot√≥n derecho del rat√≥n repetiremos la
+montura o mascota que hubiera salido justo anteriormente a trav√©s de estos botones. Si pulsamos en ellos
 y ya tenemos fuera una montura o mascota, la guarda.
