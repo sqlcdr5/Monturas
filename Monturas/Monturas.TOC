@@ -6,5 +6,6 @@
 ## Version: 10.1
 ## SavedVariables: _MonturasOptions
 ## SavedVariablesPerCharacter: _MonturasOptionsCharacter
+## IconTexture: 132254
 
 Monturas.XML
