@@ -220,7 +220,7 @@ function Montura_Voladora_Command(msg)
 				if faccion == nil then
 					faccionn = mifaccionn
 				end
-				if q == 248 and usable == true and aprendido == true and mifaccionn == faccionn then -- voladora
+				if q == 424 and usable == true and aprendido == true and mifaccionn == faccionn then -- voladora
 					vn = vn + 1
 					vt[vn] = mountIDs[i]
 				end
