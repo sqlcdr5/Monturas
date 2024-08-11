@@ -170,7 +170,7 @@ function Montura_Terrestre_Command(msg)
 				if faccion == nil then
 					faccionn = mifaccionn
 				end
-				if q == 230 and usable == true and aprendido == true and mifaccionn == faccionn then -- 230 es terrestre
+				if (q == 230 or q == 231 or q == 284) and usable == true and aprendido == true and mifaccionn == faccionn then -- terrestre
 					tn = tn + 1
 					tt[tn] = mountIDs[i]
 				end
@@ -220,7 +220,7 @@ function Montura_Voladora_Command(msg)
 				if faccion == nil then
 					faccionn = mifaccionn
 				end
-				if q == 424 and usable == true and aprendido == true and mifaccionn == faccionn then -- voladora
+				if (q == 424 or q == 436 or q == 437) and usable == true and aprendido == true and mifaccionn == faccionn then -- voladora
 					vn = vn + 1
 					vt[vn] = mountIDs[i]
 				end
